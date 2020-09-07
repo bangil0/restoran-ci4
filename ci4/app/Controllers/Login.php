@@ -5,7 +5,7 @@ class Login extends BaseController
 	public function index()
 	{
 		//return view('welcome_message');
-		echo "<h1>Login</h1>";
+		echo "Login";
 	}
 
 	//--------------------------------------------------------------------

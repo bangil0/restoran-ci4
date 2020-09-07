@@ -30,15 +30,34 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-// $routes->get('/', 'Login::index');
+	$routes->get('dashboard', 'admin\Login::index');
+// $routes->get('kategori/(:any)', 'admin\kategori::selectWhere/$1');
 
- $routes->get('kategori/(:any)', 'admin\kategori::selectWhere/$1');//
-$routes->group('admin',function($routes){
+$routes->group('admin', ['filter' => 'Auth'], function ($routes) {
+	$routes->add('/', 'admin\adminpage::index');
+	$routes->add('kategori', 'admin\kategori::read');
+	$routes->add('kategori/create', 'admin\kategori::create');
+	$routes->add('kategori/find/(:any)', 'admin\kategori::find/$1');
+	$routes->add('kategori/delete/(:any)', 'admin\kategori::delete/$1');
 
-	$routes->get('kategori/form','Admin\kategori::formInsert');
-	$routes->get('kategori','Admin\kategori::select');
-	$routes->get('kategori/update(:any)','Admin\kategori::formUpdate/$1');
+	$routes->add('menu', 'admin\menu::index');
+	$routes->add('menu/create', 'admin\menu::create');
+	$routes->add('menu/find/(:any)', 'admin\menu::find/$1');
+	$routes->add('menu/delete/(:any)', 'admin\menu::delete/$1');
 
+	$routes->add('pelanggan', 'admin\pelanggan::index');
+	$routes->add('pelanggan/create', 'admin\pelanggan::create');
+	$routes->add('pelanggan/find/(:any)', 'admin\pelanggan::find/$1');
+	$routes->add('pelanggan/delete/(:any)', 'admin\pelanggan::delete/$1');
+
+	$routes->add('order', 'admin\order::index');
+	$routes->add('order/find/(:any)', 'admin\order::find/$1');
+
+	$routes->add('orderdetail', 'admin\orderdetail::index');
+
+	$routes->add('user', 'admin\user::index');
+	$routes->add('user/find/(:any)', 'admin\user::find/$1');
+	$routes->add('user/delete/(:any)', 'admin\user::delete/$1');
 });
 
 /**

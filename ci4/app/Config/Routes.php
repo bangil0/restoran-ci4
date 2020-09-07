@@ -16,7 +16,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('Login');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -30,7 +30,16 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+// $routes->get('/', 'Login::index');
+
+ $routes->get('kategori/(:any)', 'admin\kategori::selectWhere/$1');//
+$routes->group('admin',function($routes){
+
+	$routes->get('kategori/form','Admin\kategori::formInsert');
+	$routes->get('kategori','Admin\kategori::select');
+	$routes->get('kategori/update(:any)','Admin\kategori::formUpdate/$1');
+
+});
 
 /**
  * --------------------------------------------------------------------
@@ -38,7 +47,7 @@ $routes->get('/', 'Home::index');
  * --------------------------------------------------------------------
  *
  * There will often be times that you need additional routing and you
- * need it to be able to override any defaults in this file. Environment
+ * need to it be able to override any defaults in this file. Environment
  * based routes is one such time. require() additional route files here
  * to make that happen.
  *

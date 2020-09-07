@@ -1,58 +1,84 @@
 <?php namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\Kategori_M;
 
 class Kategori extends BaseController
 {
 	public function index()
 	{
-	   echo "<h1>Belajar CI 4</h1>";
 		//return view('welcome_message');
+		echo "Belajar";
 	}
-
-	public function select()
+	
+	public function read()
 	{
-	   $data = [
-	       'judul' => 'SELECT DATA DARI controller',
-	       'kategori' => ['Makanan','Minuman','Buah']
-	   ];
-	   
-	   echo "<pre>";
-	   print_r($data);
-	   echo "</pre>";
-	   
-	   echo view("template/header");
-	   echo view("kategori/select",data);
-	   echo view("template/footer");
+		$pager = \Config\Services::pager();
+		$model = new Kategori_M();
+		
+		$data = [
+			'judul' => 'DATA KATEGORI',
+			'kategori' => $model->paginate(3,'page'),
+			'pager' => $model->pager
+		
+		];
+		
+		return view("kategori/select",$data);
 	}
-
-	public function selectWhere($id = null)
+	
+	public function create()
 	{
-	   echo "Menampilkan data yang dipilih  $id";
+		echo view("kategori/insert");
 	}
-
-	public function formInsert()
+	
+	public function insert()
 	{
-	   echo view("template/header");
-	   echo view("kategori/forminsert");
-	   echo view("template/footer");
-	}
+		$model = new Kategori_M();
 
-	public function formUpdate()
+		if ($model -> insert($_POST) === false) {
+			$error = $model->errors();
+			session()->setFlashdata('info', $error['kategori']);
+			return redirect()->to(base_url("/admin/kategori/create"));
+		} else {
+			return redirect()->to(base_url("/admin/kategori"));
+		};
+		
+	}
+	
+	public function find($id = null)
 	{
-	   echo view("template/header");
-	   echo view("kategori/update");
-	   echo view("template/footer");
-	}
+		$model = new Kategori_M();
+		$kategori = $model ->find($id);
+		
+		$data = [
+			'judul' => 'UPDATE DATA',
+			'kategori' => $kategori
+		
+		];
 
-	public function update($id = null)
+		return view("kategori/update",$data);
+	}
+	
+	public function update()
 	{
-	   echo "Menampilkan proses update $id";
-	}
+		$model = new Kategori_M();
+		$id = $_POST['idkategori'];
 
+		if ($model->save($_POST) === false) {
+			$error = $model->errors();
+			session()->setFlashdata('info', $error['kategori']);
+			return redirect()->to(base_url("/admin/kategori/find/$id"));
+		} else {
+			return redirect()->to(base_url("/admin/kategori"));
+		}
+		
+	}
+	
 	public function delete($id = null)
 	{
-	   echo "Menampilkan proses delete";
+		$model = new Kategori_M();
+		$model -> delete($id);
+		return redirect()->to(base_url("/admin/kategori"));
 	}
 
 	//--------------------------------------------------------------------

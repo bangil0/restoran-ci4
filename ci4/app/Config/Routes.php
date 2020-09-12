@@ -30,34 +30,34 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-	$routes->get('dashboard', 'admin\Login::index');
+	$routes->get('dashboard', 'Admin\Login::index');
 // $routes->get('kategori/(:any)', 'admin\kategori::selectWhere/$1');
 
 $routes->group('admin', ['filter' => 'Auth'], function ($routes) {
-	$routes->add('/', 'admin\adminpage::index');
-	$routes->add('kategori', 'admin\kategori::read');
-	$routes->add('kategori/create', 'admin\kategori::create');
-	$routes->add('kategori/find/(:any)', 'admin\kategori::find/$1');
-	$routes->add('kategori/delete/(:any)', 'admin\kategori::delete/$1');
+	$routes->add('/', 'Admin\AdminPage::index');
+	$routes->add('kategori', 'Admin\Kategori::read');
+	$routes->add('kategori/create', 'Admin\Kategori::create');
+	$routes->add('kategori/find/(:any)', 'Admin\Kategori::find/$1');
+	$routes->add('kategori/delete/(:any)', 'Admin\Kategori::delete/$1');
 
-	$routes->add('menu', 'admin\menu::index');
-	$routes->add('menu/create', 'admin\menu::create');
-	$routes->add('menu/find/(:any)', 'admin\menu::find/$1');
-	$routes->add('menu/delete/(:any)', 'admin\menu::delete/$1');
+	$routes->add('menu', 'Admin\Menu::index');
+	$routes->add('menu/create', 'Admin\Menu::create');
+	$routes->add('menu/find/(:any)', 'Admin\Menu::find/$1');
+	$routes->add('menu/delete/(:any)', 'Admin\Menu::delete/$1');
 
-	$routes->add('pelanggan', 'admin\pelanggan::index');
-	$routes->add('pelanggan/create', 'admin\pelanggan::create');
-	$routes->add('pelanggan/find/(:any)', 'admin\pelanggan::find/$1');
-	$routes->add('pelanggan/delete/(:any)', 'admin\pelanggan::delete/$1');
+	$routes->add('pelanggan', 'Admin\Pelanggan::index');
+	$routes->add('pelanggan/create', 'Admin\Pelanggan::create');
+	$routes->add('pelanggan/find/(:any)', 'Admin\Pelanggan::find/$1');
+	$routes->add('pelanggan/delete/(:any)', 'Admin\Pelanggan::delete/$1');
 
-	$routes->add('order', 'admin\order::index');
-	$routes->add('order/find/(:any)', 'admin\order::find/$1');
+	$routes->add('order', 'Admin\Order::index');
+	$routes->add('order/find/(:any)', 'Admin\Order::find/$1');
 
-	$routes->add('orderdetail', 'admin\orderdetail::index');
+	$routes->add('orderdetail', 'Admin\OrderDetail::index');
 
-	$routes->add('user', 'admin\user::index');
-	$routes->add('user/find/(:any)', 'admin\user::find/$1');
-	$routes->add('user/delete/(:any)', 'admin\user::delete/$1');
+	$routes->add('user', 'Admin\User::index');
+	$routes->add('user/find/(:any)', 'Admin\User::find/$1');
+	$routes->add('user/delete/(:any)', 'Admin\User::delete/$1');
 });
 
 /**
